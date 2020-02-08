@@ -3,7 +3,9 @@
 #include "libs.h"
 #endif
 
-#include "LoadShader.h";
+#include "LoadShader.h"
+
+void updateFpsCounter(GLFWwindow*);
 
 int main()
 {
@@ -16,13 +18,10 @@ int main()
 		return 1;
 	}
 
-	if (!GLEW_VERSION_3_0)
-	{
-		std::cout << "GLEW version 3.0 not available.\n";
-	}
-
 	//create window and OpenGL context
-	window = glfwCreateWindow(640, 480, "Window", NULL, NULL);
+	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+	const GLFWvidmode* vidmode = glfwGetVideoMode(monitor);
+	window = glfwCreateWindow(vidmode->width, vidmode->height, "Window", monitor, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -31,6 +30,7 @@ int main()
 
 	glfwMakeContextCurrent(window);
 
+	glewExperimental = true;
 	if (!glewInit())
 	{
 		std::cout << "Could not initialise GLEW.\n";
@@ -38,35 +38,48 @@ int main()
 
 	//So we can catch key presses
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-
+	
 	GLuint vertexArrayId;
 	glGenVertexArrays(1, &vertexArrayId);
 	glBindVertexArray(vertexArrayId);
 
-	static const GLfloat g_vertex_buffer_data[] =
+	//Compile GLSL program from shaders
+	GLuint programId = LoadShaders("VertexShader.glsl", "FragmentShader.glsl");
+
+	GLuint matrixId = glGetUniformLocation(programId, "mvp");
+
+	glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
+	glm::mat4 view = glm::lookAt(glm::vec3(4, 3, 3), //where camera is in world space
+		glm::vec3(0, 0, 0), //look towards origin
+		glm::vec3(0, 1, 0) //camera oriented vertically
+	);
+	glm::mat4 model = glm::mat4(1.0f);
+	glm::mat4 mvp = projection * view * model;
+
+	static const GLfloat vertexBufferData[] =
 	{
 		-1.0f, -1.0f, 0.0f,
 		1.0f, -1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f
 	};
 
 	GLuint vertexBuffer;
-	glGenBuffers(11, &vertexBuffer);
+	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexBufferData), &vertexBufferData, GL_STATIC_DRAW);
 
-
-	//Compile GLSL program from shaders
-	GLuint programID = LoadShaders("VertexShader.glsl", "FragmentShader.glsl");
 
 	//Set background colour
 	glClearColor(0.1f, 0.1f, 0.3f, 0.2f);
 
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE))
 	{
+		updateFpsCounter(window);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glUseProgram(programID);
+		glUseProgram(programId);
+
+		glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvp[0][0]);
 
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
@@ -76,12 +89,32 @@ int main()
 
 
 		glfwSwapBuffers(window);
-
 		glfwPollEvents();
 	}
 
+	glDeleteBuffers(1, &vertexBuffer);
+	glDeleteProgram(programId);
+	glDeleteVertexArrays(1, &vertexArrayId);
 
 	glfwTerminate();
 
 	return 0;
+}
+
+void updateFpsCounter(GLFWwindow* window)
+{
+	static double previousSeconds = glfwGetTime();
+	static int frameCount;
+	double currentSeconds = glfwGetTime();
+	double elapsedSeconds = currentSeconds - previousSeconds;
+	if (elapsedSeconds > 0.25f)
+	{
+		previousSeconds = currentSeconds;
+		double fps = (double)frameCount / elapsedSeconds;
+		char fpsString[128];
+		sprintf_s(fpsString, "fps: %.2f", fps);
+		glfwSetWindowTitle(window, fpsString);
+		frameCount = 0;
+	}
+	frameCount++;
 }

@@ -1,7 +1,13 @@
 #pragma once
+//OpenGL libraries
 #include <glew.h>
-#include <iostream>
 #include <glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+//Standard libraries
+#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <string>
