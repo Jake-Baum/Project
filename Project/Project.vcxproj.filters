@@ -26,9 +26,15 @@
     <ClInclude Include="libs.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="LoadShader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="VertexShader.glsl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="FragmentShader.glsl">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

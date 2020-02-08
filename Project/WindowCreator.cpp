@@ -1,4 +1,9 @@
-#include "libs.h";
+#ifndef LIBS_INCLUDED
+#define LIBS_INCLUDED
+#include "libs.h"
+#endif
+
+#include "LoadShader.h";
 
 int main()
 {
@@ -50,9 +55,18 @@ int main()
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 
+
+	//Compile GLSL program from shaders
+	GLuint programID = LoadShaders("VertexShader.glsl", "FragmentShader.glsl");
+
+	//Set background colour
+	glClearColor(0.1f, 0.1f, 0.3f, 0.2f);
+
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE))
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		glUseProgram(programID);
 
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
