@@ -4,6 +4,7 @@
 #endif
 
 #include "LoadShader.h"
+#include "Cube.h"
 
 void updateFpsCounter(GLFWwindow*);
 
@@ -21,23 +22,47 @@ int main()
 	//create window and OpenGL context
 	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* vidmode = glfwGetVideoMode(monitor);
-	window = glfwCreateWindow(vidmode->width, vidmode->height, "Window", monitor, NULL);
+	
+	bool fullScreen = false;
+	int screenWidth = vidmode->width;
+	int screenHeight = vidmode->height;
+
+	if (!fullScreen)
+	{
+		monitor = NULL;
+		screenWidth = 640;
+		screenHeight = 480;
+	}
+
+	window = glfwCreateWindow(screenWidth, screenHeight, "Window", monitor, NULL);
 	if (!window)
 	{
+		std::cout << "Could not create window.\n";
 		glfwTerminate();
 		return -1;
 	}
 
 	glfwMakeContextCurrent(window);
 
-	glewExperimental = true;
-	if (!glewInit())
+	glewExperimental = GL_TRUE;
+	GLenum err = glewInit();
+	if (err != GLEW_OK)
 	{
 		std::cout << "Could not initialise GLEW.\n";
+		std::cout << glewGetErrorString(err) << "\n";
+		glfwTerminate();
+		return -1;
 	}
 
 	//So we can catch key presses
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+
+	//Set background colour
+	glClearColor(0.1f, 0.1f, 0.3f, 0.2f);
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+
 	
 	GLuint vertexArrayId;
 	glGenVertexArrays(1, &vertexArrayId);
@@ -48,34 +73,32 @@ int main()
 
 	GLuint matrixId = glGetUniformLocation(programId, "mvp");
 
+	//create matrices
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
-	glm::mat4 view = glm::lookAt(glm::vec3(4, 3, 3), //where camera is in world space
+	glm::mat4 view = glm::lookAt(glm::vec3(4, 3, -3), //where camera is in world space
 		glm::vec3(0, 0, 0), //look towards origin
 		glm::vec3(0, 1, 0) //camera oriented vertically
 	);
 	glm::mat4 model = glm::mat4(1.0f);
 	glm::mat4 mvp = projection * view * model;
 
-	static const GLfloat vertexBufferData[] =
-	{
-		-1.0f, -1.0f, 0.0f,
-		1.0f, -1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f
-	};
+	Cube cube(1);
 
 	GLuint vertexBuffer;
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexBufferData), &vertexBufferData, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(cube.getVertexBufferData()), cube.getVertexBufferData(), GL_STATIC_DRAW);
 
+	GLuint colourBuffer;
+	glGenBuffers(1, &colourBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, colourBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(cube.getColourBufferData()), cube.getColourBufferData(), GL_STATIC_DRAW);
 
-	//Set background colour
-	glClearColor(0.1f, 0.1f, 0.3f, 0.2f);
 
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE))
 	{
 		updateFpsCounter(window);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glUseProgram(programId);
 
@@ -84,15 +107,21 @@ int main()
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-		glDisableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+		glBindBuffer(GL_ARRAY_BUFFER, colourBuffer);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
+
+		glDrawArrays(GL_TRIANGLES, 0, cube.getVertexDataLength() / 3);
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 
 	glDeleteBuffers(1, &vertexBuffer);
+	glDeleteBuffers(1, &colourBuffer);
 	glDeleteProgram(programId);
 	glDeleteVertexArrays(1, &vertexArrayId);
 

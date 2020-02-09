@@ -3,43 +3,25 @@
 #include "libs.h"
 #endif
 
+#include "Cube.h"
 
-class Cube
+Cube::Cube(int i)
 {
-    static const GLfloat vertexBufferData[] =
-    {
-        -1.0f, -1.0f, -1.0f,    -1.0f, -1.0f, 1.0f,     -1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, -1.0f,     -1.0f, -1.0f, -1.0f,     -1.0f, 1.0f, -1.0f,
-        1.0f, -1.0f, 1.0f,     -1.0f, -1.0f, -1.0f,     1.0f, -1.0f, -1.0f,
-        1.0f, 1.0f, -1.0f,     1.0f, -1.0f, -1.0f,     -1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f, -1.0f,     -1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f, -1.0f,       1.0f, -1.0f, 1.0f,
-        -1.0f, -1.0f, 1.0f,
-        -1.0f, -1.0f, -1.0f,
-        -1.0f, 1.0f, 1.0f,
-        -1.0f, -1.0f, 1.0f,
-        1.0f, -1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, -1.0f, -1.0f,
-        1.0f, 1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, -1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, -1.0f,
-        -1.0f, 1.0f, -1.0f,
-        1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f, -1.0f,
-        -1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f,
-        1.0f, -1.0f, 1.0f
-    };
+    memcpy(vertexBufferData, baseCubeVertices, sizeof(baseCubeVertices));
+    memcpy(colourBufferData, baseColours, sizeof(baseColours));
+}
 
-    
-};
-
-Cube::Cube()
+int Cube::getVertexDataLength()
 {
-    
+    return vertexDataLength;
+    //return sizeof(baseCubeVertices) / sizeof(baseCubeVertices[0]);
+}
+GLfloat* Cube::getVertexBufferData()
+{
+    return vertexBufferData;
+}
+
+GLfloat* Cube::getColourBufferData()
+{
+    return colourBufferData;
 }

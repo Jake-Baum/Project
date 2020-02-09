@@ -146,6 +146,7 @@
     <ClCompile Include="WindowCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="libs.h" />
     <ClInclude Include="LoadShader.h" />
   </ItemGroup>
