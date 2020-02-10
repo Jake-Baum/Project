@@ -1,4 +1,10 @@
 #pragma once
+
+#ifndef LIBS_INCLUDED
+#define LIBS_INCLUDED
+#include "libs.h"
+#endif
+
 class Cube
 {
 private:
@@ -83,12 +89,12 @@ private:
     };
 
     static const int vertexDataLength = 108;
-    GLfloat vertexBufferData[vertexDataLength];
-    GLfloat colourBufferData[vertexDataLength];
+    std::vector<float> vertexBufferData;
+    std::vector<float> colourBufferData;
 
 public:
     Cube(int);
     int getVertexDataLength();
-    GLfloat* getVertexBufferData();
-    GLfloat* getColourBufferData();
+    std::vector<float> getVertexBufferData();
+    std::vector<float> getColourBufferData();
 };

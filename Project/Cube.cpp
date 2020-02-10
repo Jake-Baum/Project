@@ -1,14 +1,12 @@
-#ifndef LIBS_INCLUDED
-#define LIBS_INCLUDED
-#include "libs.h"
-#endif
-
 #include "Cube.h"
 
-Cube::Cube(int i)
+Cube::Cube(int a)
 {
-    memcpy(vertexBufferData, baseCubeVertices, sizeof(baseCubeVertices));
-    memcpy(colourBufferData, baseColours, sizeof(baseColours));
+    for (int i = 0; i < vertexDataLength; i++)
+    {
+        vertexBufferData.push_back(baseCubeVertices[i]);
+        colourBufferData.push_back(baseColours[i]);
+    }
 }
 
 int Cube::getVertexDataLength()
@@ -16,12 +14,12 @@ int Cube::getVertexDataLength()
     return vertexDataLength;
     //return sizeof(baseCubeVertices) / sizeof(baseCubeVertices[0]);
 }
-GLfloat* Cube::getVertexBufferData()
+std::vector<float> Cube::getVertexBufferData()
 {
     return vertexBufferData;
 }
 
-GLfloat* Cube::getColourBufferData()
+std::vector<float> Cube::getColourBufferData()
 {
     return colourBufferData;
 }

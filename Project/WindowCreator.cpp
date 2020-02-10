@@ -84,17 +84,17 @@ int main()
 
 	Cube cube(1);
 
-	float* vertexBufferData = cube.getVertexBufferData();
+	std::vector<float> vertexBufferData = cube.getVertexBufferData();
 	GLuint vertexBuffer;
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, cube.getVertexDataLength() * sizeof(float), vertexBufferData, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, cube.getVertexDataLength() * sizeof(float), &vertexBufferData[0], GL_STATIC_DRAW);
 
-	float* colourBufferData = cube.getColourBufferData();
+	std::vector<float> colourBufferData = cube.getColourBufferData();
 	GLuint colourBuffer;
 	glGenBuffers(1, &colourBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, colourBuffer);
-	glBufferData(GL_ARRAY_BUFFER, cube.getVertexDataLength() * sizeof(float), colourBufferData, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, cube.getVertexDataLength() * sizeof(float), &colourBufferData[0], GL_STATIC_DRAW);
 
 
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE))
