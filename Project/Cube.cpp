@@ -1,6 +1,6 @@
 #include "Cube.h"
 
-Cube::Cube(int a)
+Cube::Cube()
 {
     for (int i = 0; i < numVertices; i++)
     {
@@ -16,6 +16,24 @@ Cube::Cube(int a)
     }
 
     position = glm::vec3(3.0f, 1.0f, 1.0f);
+}
+
+Cube::Cube(glm::vec3 position)
+{
+    for (int i = 0; i < numVertices; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            vertexBufferData.push_back(baseCubeVertices[i][j]);
+            colourBufferData.push_back(baseColours[i][j]);
+        }
+    }
+    for (int i = 0; i < numIndices; i++)
+    {
+        indexBufferData.push_back(baseIndices[i]);
+    }
+
+    this->position = position;
 }
 
 std::vector<float> Cube::getVertexBufferData()

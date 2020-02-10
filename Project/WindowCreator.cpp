@@ -73,18 +73,25 @@ int main()
 
 	GLuint matrixId = glGetUniformLocation(programId, "mvp");
 
-	Cube cube(1);
+	Cube cubes[] =
+	{
+		Cube(glm::vec3(4.0f, 0.0f, 0.0f)), Cube(glm::vec3(-4.0f, 0.0f, 0.0f))
+	};
+
+	glm::mat4 mvps[2];
 
 	//create matrices
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
-	glm::mat4 view = glm::lookAt(glm::vec3(0, 5, 5), //where camera is in world space
+	glm::mat4 view = glm::lookAt(glm::vec3(0, 5, 10), //where camera is in world space
 		glm::vec3(0, 0, 0), //look towards origin
 		glm::vec3(0, 1, 0) //camera oriented vertically
 	);
-	glm::mat4 model = cube.getModelMatrix();
-	glm::mat4 mvp = projection * view * model;
+	mvps[0] = projection * view * cubes[0].getModelMatrix();
+	mvps[1] = projection * view * cubes[1].getModelMatrix();
 
-	std::vector<float> vertexBufferData = cube.getVertexBufferData();
+	
+
+	std::vector<float> vertexBufferData = cubes[0].getVertexBufferData();
 	unsigned int vertexBuffer;
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
@@ -92,14 +99,14 @@ int main()
 	std::cout << vertexBufferData.size() << " 24\n";
 
 
-	std::vector<unsigned int> indexBufferData = cube.getIndexBufferData();
+	std::vector<unsigned int> indexBufferData = cubes[0].getIndexBufferData();
 	unsigned int indexBuffer;
 	glGenBuffers(1, &indexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBufferData.size() * sizeof(unsigned int), &indexBufferData[0], GL_STATIC_DRAW);
 	std::cout << indexBufferData.size() << " 36\n";
 
-	std::vector<float> colourBufferData = cube.getColourBufferData();
+	std::vector<float> colourBufferData = cubes[0].getColourBufferData();
 	GLuint colourBuffer;
 	glGenBuffers(1, &colourBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, colourBuffer);
@@ -114,7 +121,7 @@ int main()
 
 		glUseProgram(programId);
 
-		glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvp[0][0]);
+		glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvps[0][0][0]);
 
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
@@ -124,7 +131,20 @@ int main()
 		glBindBuffer(GL_ARRAY_BUFFER, colourBuffer);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-		glDrawElements(GL_TRIANGLES, cube.numIndices, GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_TRIANGLES, cubes[0].numIndices, GL_UNSIGNED_INT, nullptr);
+		
+		glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvps[1][0][0]);
+
+		glEnableVertexAttribArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+		glEnableVertexAttribArray(1);
+		glBindBuffer(GL_ARRAY_BUFFER, colourBuffer);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+		glDrawElements(GL_TRIANGLES, cubes[1].numIndices, GL_UNSIGNED_INT, nullptr);
+		
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 

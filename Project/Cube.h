@@ -88,7 +88,8 @@ private:
     std::vector<float> colourBufferData;
 
 public:
-    Cube(int);
+    Cube();
+    Cube(glm::vec3);
     std::vector<float> getVertexBufferData();
     std::vector<unsigned int> getIndexBufferData();
     std::vector<float> getColourBufferData();
