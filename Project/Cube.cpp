@@ -10,11 +10,20 @@ Cube::Cube(int a)
             colourBufferData.push_back(baseColours[i][j]);
         }
     }
+    for (int i = 0; i < numIndices; i++)
+    {
+        indexBufferData.push_back(baseIndices[i]);
+    }
 }
 
 std::vector<float> Cube::getVertexBufferData()
 {
     return vertexBufferData;
+}
+
+std::vector<unsigned int> Cube::getIndexBufferData()
+{
+    return indexBufferData;
 }
 
 std::vector<float> Cube::getColourBufferData()

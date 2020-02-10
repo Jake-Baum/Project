@@ -8,47 +8,36 @@
 class Cube
 {
 public:
-    static const int numVertices = 36;
+    static const unsigned int numVertices = 8;
+    static const unsigned int numIndices = 36;
 
 private:
     static constexpr GLfloat baseCubeVertices[][3] =
     {
-        {-1.0f,-1.0f,-1.0f},
-        {-1.0f,-1.0f, 1.0f},
-        {-1.0f, 1.0f, 1.0f },
-        {1.0f, 1.0f, -1.0f},
-        {-1.0f,-1.0f,-1.0f},
-        {-1.0f, 1.0f,-1.0f},
-        {1.0f,-1.0f, 1.0f},
-        {-1.0f,-1.0f,-1.0f},
-        {1.0f,-1.0f,-1.0f},
-        {1.0f, 1.0f,-1.0f},
-        {1.0f,-1.0f,-1.0f},
-        {-1.0f,-1.0f,-1.0f},
-        {-1.0f,-1.0f,-1.0f},
-        {-1.0f, 1.0f, 1.0f},
-        {-1.0f, 1.0f,-1.0f},
-        {1.0f,-1.0f, 1.0f},
-        {-1.0f,-1.0f, 1.0f},
-        {-1.0f,-1.0f,-1.0f},
-        {-1.0f, 1.0f, 1.0f},
-        {-1.0f,-1.0f, 1.0f},
-        {1.0f,-1.0f, 1.0f},
-        {1.0f, 1.0f, 1.0f},
-        {1.0f,-1.0f,-1.0f},
-        {1.0f, 1.0f,-1.0f},
-        {1.0f,-1.0f,-1.0f},
-        {1.0f, 1.0f, 1.0f},
-        {1.0f,-1.0f, 1.0f},
-        {1.0f, 1.0f, 1.0f},
-        {1.0f, 1.0f,-1.0f},
-        {-1.0f, 1.0f,-1.0f},
-        {1.0f, 1.0f, 1.0f},
-        {-1.0f, 1.0f,-1.0f},
-        {-1.0f, 1.0f, 1.0f},
-        {1.0f, 1.0f, 1.0f},
-        {-1.0f, 1.0f, 1.0f},
-        {1.0f,-1.0f, 1.0f}
+        {-1.0f,-1.0f,-1.0f},//0
+        {-1.0f,-1.0f, 1.0f},//1
+        {-1.0f, 1.0f, 1.0f },//2
+        {1.0f, 1.0f, -1.0f},//3
+        {-1.0f, 1.0f,-1.0f},//4
+        {1.0f,-1.0f, 1.0f},//5
+        {1.0f,-1.0f,-1.0f},//6
+        {1.0f, 1.0f, 1.0f}//7
+    };
+
+    static constexpr unsigned int baseIndices[] =
+    {
+        0,1,2,
+        3,0,4,
+        5,0,6,
+        3,6,0,
+        0,2,4,
+        5,1,0,
+        2,1,5,
+        7,6,3,
+        6,7,5,
+        7,3,4,
+        7,4,2,
+        7,2,5
     };
 
 
@@ -61,7 +50,7 @@ private:
         {0.435f,  0.602f,  0.223f},
         {0.310f,  0.747f,  0.185f},
         {0.597f,  0.770f,  0.761f},
-        {0.559f,  0.436f,  0.730f},
+        {0.559f,  0.436f,  0.730f}/*,
         {0.359f,  0.583f,  0.152f},
         {0.483f,  0.596f,  0.789f},
         {0.559f,  0.861f,  0.639f},
@@ -89,14 +78,16 @@ private:
         {0.393f,  0.621f,  0.362f},
         {0.673f,  0.211f,  0.457f},
         {0.820f,  0.883f,  0.371f},
-        {0.982f,  0.099f,  0.879f}
+        {0.982f,  0.099f,  0.879f}*/
     };
 
     std::vector<float> vertexBufferData;
+    std::vector<unsigned int> indexBufferData;
     std::vector<float> colourBufferData;
 
 public:
     Cube(int);
     std::vector<float> getVertexBufferData();
+    std::vector<unsigned int> getIndexBufferData();
     std::vector<float> getColourBufferData();
 };
