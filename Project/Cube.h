@@ -81,6 +81,8 @@ private:
         {0.982f,  0.099f,  0.879f}*/
     };
 
+    glm::vec3 position;
+
     std::vector<float> vertexBufferData;
     std::vector<unsigned int> indexBufferData;
     std::vector<float> colourBufferData;
@@ -90,4 +92,5 @@ public:
     std::vector<float> getVertexBufferData();
     std::vector<unsigned int> getIndexBufferData();
     std::vector<float> getColourBufferData();
+    glm::mat4 getModelMatrix();
 };

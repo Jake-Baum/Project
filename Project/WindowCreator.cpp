@@ -73,16 +73,16 @@ int main()
 
 	GLuint matrixId = glGetUniformLocation(programId, "mvp");
 
+	Cube cube(1);
+
 	//create matrices
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
 	glm::mat4 view = glm::lookAt(glm::vec3(0, 5, 5), //where camera is in world space
 		glm::vec3(0, 0, 0), //look towards origin
 		glm::vec3(0, 1, 0) //camera oriented vertically
 	);
-	glm::mat4 model = glm::mat4(1.0f);
+	glm::mat4 model = cube.getModelMatrix();
 	glm::mat4 mvp = projection * view * model;
-
-	Cube cube(1);
 
 	std::vector<float> vertexBufferData = cube.getVertexBufferData();
 	unsigned int vertexBuffer;
@@ -123,7 +123,6 @@ int main()
 		glEnableVertexAttribArray(1);
 		glBindBuffer(GL_ARRAY_BUFFER, colourBuffer);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
 
 		glDrawElements(GL_TRIANGLES, cube.numIndices, GL_UNSIGNED_INT, nullptr);
 		glDisableVertexAttribArray(0);

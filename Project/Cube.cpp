@@ -14,6 +14,8 @@ Cube::Cube(int a)
     {
         indexBufferData.push_back(baseIndices[i]);
     }
+
+    position = glm::vec3(3.0f, 1.0f, 1.0f);
 }
 
 std::vector<float> Cube::getVertexBufferData()
@@ -29,4 +31,9 @@ std::vector<unsigned int> Cube::getIndexBufferData()
 std::vector<float> Cube::getColourBufferData()
 {
     return colourBufferData;
+}
+
+glm::mat4 Cube::getModelMatrix()
+{
+    return glm::translate(glm::mat4(1.0f), position);
 }
