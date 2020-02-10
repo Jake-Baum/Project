@@ -85,17 +85,16 @@ int main()
 	Cube cube(1);
 
 	std::vector<float> vertexBufferData = cube.getVertexBufferData();
-	GLuint vertexBuffer;
+	unsigned int vertexBuffer;
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, cube.getVertexDataLength() * sizeof(float), &vertexBufferData[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, cube.numVertices * 3 * sizeof(float), &vertexBufferData[0], GL_STATIC_DRAW);
 
 	std::vector<float> colourBufferData = cube.getColourBufferData();
 	GLuint colourBuffer;
 	glGenBuffers(1, &colourBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, colourBuffer);
-	glBufferData(GL_ARRAY_BUFFER, cube.getVertexDataLength() * sizeof(float), &colourBufferData[0], GL_STATIC_DRAW);
-
+	glBufferData(GL_ARRAY_BUFFER, cube.numVertices * 3 * sizeof(float), &colourBufferData[0], GL_STATIC_DRAW);
 
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE))
 	{
@@ -115,7 +114,7 @@ int main()
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
 
-		glDrawArrays(GL_TRIANGLES, 0, cube.getVertexDataLength() / 3);
+		glDrawArrays(GL_TRIANGLES, 0, cube.numVertices);
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 

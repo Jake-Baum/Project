@@ -2,18 +2,16 @@
 
 Cube::Cube(int a)
 {
-    for (int i = 0; i < vertexDataLength; i++)
+    for (int i = 0; i < numVertices; i++)
     {
-        vertexBufferData.push_back(baseCubeVertices[i]);
-        colourBufferData.push_back(baseColours[i]);
+        for (int j = 0; j < 3; j++)
+        {
+            vertexBufferData.push_back(baseCubeVertices[i][j]);
+            colourBufferData.push_back(baseColours[i][j]);
+        }
     }
 }
 
-int Cube::getVertexDataLength()
-{
-    return vertexDataLength;
-    //return sizeof(baseCubeVertices) / sizeof(baseCubeVertices[0]);
-}
 std::vector<float> Cube::getVertexBufferData()
 {
     return vertexBufferData;
