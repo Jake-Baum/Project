@@ -71,14 +71,15 @@ int main()
 	//Compile GLSL program from shaders
 	GLuint programId = LoadShaders("VertexShader.glsl", "FragmentShader.glsl");
 
-	GLuint matrixId = glGetUniformLocation(programId, "mvp");
+	unsigned int mvpId = glGetUniformLocation(programId, "mvp");
 
 	Cube cubes[] =
 	{
 		Cube(glm::vec3(4.0f, 0.0f, 0.0f)), Cube(glm::vec3(-4.0f, 0.0f, 0.0f))
 	};
 
-	glm::mat4 mvps[2];
+	cubes[0].setMvpId(mvpId);
+	cubes[1].setMvpId(mvpId);
 
 	//create matrices
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
@@ -86,33 +87,8 @@ int main()
 		glm::vec3(0, 0, 0), //look towards origin
 		glm::vec3(0, 1, 0) //camera oriented vertically
 	);
-	mvps[0] = projection * view * cubes[0].getModelMatrix();
-	mvps[1] = projection * view * cubes[1].getModelMatrix();
 
-	
-
-	std::vector<float> vertexBufferData = cubes[0].getVertexBufferData();
-	unsigned int vertexBuffer;
-	glGenBuffers(1, &vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertexBufferData.size() * sizeof(float), &vertexBufferData[0], GL_STATIC_DRAW);
-	std::cout << vertexBufferData.size() << " 24\n";
-
-
-	std::vector<unsigned int> indexBufferData = cubes[0].getIndexBufferData();
-	unsigned int indexBuffer;
-	glGenBuffers(1, &indexBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBufferData.size() * sizeof(unsigned int), &indexBufferData[0], GL_STATIC_DRAW);
-	std::cout << indexBufferData.size() << " 36\n";
-
-	std::vector<float> colourBufferData = cubes[0].getColourBufferData();
-	GLuint colourBuffer;
-	glGenBuffers(1, &colourBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, colourBuffer);
-	glBufferData(GL_ARRAY_BUFFER, colourBufferData.size() * sizeof(float), &colourBufferData[0], GL_STATIC_DRAW);
-	std::cout << vertexBufferData.size() << " 24\n";
-
+	glm::mat4 vp = projection * view;
 
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE))
 	{
@@ -121,29 +97,10 @@ int main()
 
 		glUseProgram(programId);
 
-		glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvps[0][0][0]);
-
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, colourBuffer);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		glDrawElements(GL_TRIANGLES, cubes[0].numIndices, GL_UNSIGNED_INT, nullptr);
-		
-		glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvps[1][0][0]);
-
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, colourBuffer);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		glDrawElements(GL_TRIANGLES, cubes[1].numIndices, GL_UNSIGNED_INT, nullptr);
+		for (Cube cube : cubes)
+		{
+			cube.draw(vp);
+		}
 		
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
@@ -152,7 +109,7 @@ int main()
 		glfwPollEvents();
 	}
 
-	glDeleteBuffers(1, &vertexBuffer);
+	//glDeleteBuffers(1, &vertexBuffer);
 	//glDeleteBuffers(1, &colourBuffer);
 	glDeleteProgram(programId);
 	glDeleteVertexArrays(1, &vertexArrayId);

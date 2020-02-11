@@ -87,6 +87,11 @@ private:
     std::vector<unsigned int> indexBufferData;
     std::vector<float> colourBufferData;
 
+    unsigned int vertexBuffer;
+    unsigned int indexBuffer;
+    unsigned int colourBuffer;
+    unsigned int mvpId;
+
 public:
     Cube();
     Cube(glm::vec3);
@@ -94,4 +99,7 @@ public:
     std::vector<unsigned int> getIndexBufferData();
     std::vector<float> getColourBufferData();
     glm::mat4 getModelMatrix();
+    void setMvpId(unsigned int);
+
+    void draw(glm::mat4);
 };
