@@ -73,7 +73,9 @@ int main()
 
 	unsigned int mvpId = glGetUniformLocation(programId, "mvp");
 
-	World world(window, programId);
+
+	Camera camera;
+	World world(window, programId, camera);
 
 	std::vector<Cube> cubes =
 	{
@@ -89,7 +91,7 @@ int main()
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE))
 	{
 		updateFpsCounter(window);
-		world.draw();
+		world.update();
 	}
 
 	glDeleteProgram(programId);

@@ -1,10 +1,10 @@
 #include "World.h"
-#include "Camera.h"
 
-World::World(GLFWwindow* window, unsigned int programId)
+World::World(GLFWwindow* window, unsigned int programId, Camera camera)
 {
 	this->window = window;
 	this->programId = programId;
+	this->camera = camera;
 }
 
 std::vector<Cube> World::getCubes()
@@ -17,17 +17,24 @@ void World::addCube(Cube cube)
 	cubes.push_back(cube);
 }
 
+void World::update()
+{
+	prevTime = currentTime;
+	currentTime = glfwGetTime();
+	float deltaTime = float(currentTime - prevTime);
+
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		std::cout << camera.getPosition().z << "\n";
+		camera.translate(glm::vec3(0, 0, -deltaTime * camera.getSpeed()));
+	}
+
+	draw();
+}
+
 void World::draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	Camera camera;
-	//create matrices
-	//glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
-	//glm::mat4 view = glm::lookAt(glm::vec3(0, 3, 10), //where camera is in world space
-	//	glm::vec3(0, 0, 0), //look towards origin
-	//	glm::vec3(0, 1, 0) //camera oriented vertically
-	//);
 
 	glm::mat4 vp = camera.getVp();
 

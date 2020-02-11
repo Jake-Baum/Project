@@ -6,9 +6,22 @@ Camera::Camera()
 	position = glm::vec3(0, 3, 10);
 }
 
+glm::vec3 Camera::getPosition()
+{
+	return position;
+}
+
+float Camera::getSpeed()
+{
+	return speed;
+}
+
 void Camera::translate(glm::vec3 vec)
 {
-	position + vec;
+	std::cout << "Vec: " << vec.z << "\n";
+	std::cout << "Position before: " << position.z << "\n";
+	position += vec;
+	std::cout <<"Position after: " << position.z << "\n";
 }
 
 glm::mat4 Camera::getViewMatrix()

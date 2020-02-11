@@ -15,6 +15,8 @@ private:
 public:
 	Camera();
 	glm::mat4 getViewMatrix();
+	glm::vec3 getPosition();
+	float getSpeed();
 	void translate(glm::vec3);
 	glm::mat4 getVp();
 };
