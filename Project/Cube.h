@@ -95,6 +95,7 @@ private:
 public:
     Cube();
     Cube(glm::vec3);
+    //~Cube();
     std::vector<float> getVertexBufferData();
     std::vector<unsigned int> getIndexBufferData();
     std::vector<float> getColourBufferData();

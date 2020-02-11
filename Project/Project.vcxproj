@@ -144,11 +144,13 @@
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="LoadShader.cpp" />
     <ClCompile Include="WindowCreator.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cube.h" />
     <ClInclude Include="libs.h" />
     <ClInclude Include="LoadShader.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl" />

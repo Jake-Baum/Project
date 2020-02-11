@@ -50,7 +50,12 @@ Cube::Cube(glm::vec3 position)
     glBufferData(GL_ARRAY_BUFFER, colourBufferData.size() * sizeof(float), &colourBufferData[0], GL_STATIC_DRAW);
 }
 
-
+//Cube::~Cube()
+//{
+//  glDeleteBuffers(1, &vertexBuffer);
+//  glDeleteBuffers(1, &indexBuffer);
+//  glDeleteBuffers(1, &colourBuffer);
+//}
 
 std::vector<float> Cube::getVertexBufferData()
 {

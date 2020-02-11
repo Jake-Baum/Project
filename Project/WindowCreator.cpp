@@ -4,6 +4,7 @@
 #endif
 
 #include "LoadShader.h"
+#include "World.h"
 #include "Cube.h"
 
 void updateFpsCounter(GLFWwindow*);
@@ -63,7 +64,6 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 
-	
 	GLuint vertexArrayId;
 	glGenVertexArrays(1, &vertexArrayId);
 	glBindVertexArray(vertexArrayId);
@@ -73,6 +73,8 @@ int main()
 
 	unsigned int mvpId = glGetUniformLocation(programId, "mvp");
 
+	World world(window, programId);
+
 	std::vector<Cube> cubes =
 	{
 		Cube(glm::vec3(4.0f, 0.0f, 0.0f)), Cube(glm::vec3(-4.0f, 0.0f, 0.0f)), Cube(glm::vec3(0.0f, 0.0f, -4.0f)), Cube(glm::vec3(0.0f, 2.0, -4.0))
@@ -81,38 +83,15 @@ int main()
 	for (Cube& cube: cubes)
 	{
 		cube.setMvpId(mvpId);
+		world.addCube(cube);
 	}
-
-	//create matrices
-	glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
-	glm::mat4 view = glm::lookAt(glm::vec3(0, 3, 10), //where camera is in world space
-		glm::vec3(0, 0, 0), //look towards origin
-		glm::vec3(0, 1, 0) //camera oriented vertically
-	);
-
-	glm::mat4 vp = projection * view;
 
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE))
 	{
 		updateFpsCounter(window);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		glUseProgram(programId);
-
-		for (Cube cube : cubes)
-		{
-			cube.draw(vp);
-		}
-		
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-
-		glfwSwapBuffers(window);
-		glfwPollEvents();
+		world.draw();
 	}
 
-	//glDeleteBuffers(1, &vertexBuffer);
-	//glDeleteBuffers(1, &colourBuffer);
 	glDeleteProgram(programId);
 	glDeleteVertexArrays(1, &vertexArrayId);
 
