@@ -16,6 +16,9 @@
     <Filter Include="Source Files\Objects">
       <UniqueIdentifier>{768a94fa-c8c6-4b6a-bad6-1bf382831e4a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{a9f20598-fed9-4943-ac51-dd5dabb01871}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WindowCreator.cpp">
@@ -40,11 +43,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="VertexShader.glsl">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="FragmentShader.glsl">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="VertexShader.glsl">
+      <Filter>Source Files\Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

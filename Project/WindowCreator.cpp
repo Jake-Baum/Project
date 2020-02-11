@@ -73,17 +73,19 @@ int main()
 
 	unsigned int mvpId = glGetUniformLocation(programId, "mvp");
 
-	Cube cubes[] =
+	std::vector<Cube> cubes =
 	{
-		Cube(glm::vec3(4.0f, 0.0f, 0.0f)), Cube(glm::vec3(-4.0f, 0.0f, 0.0f))
+		Cube(glm::vec3(4.0f, 0.0f, 0.0f)), Cube(glm::vec3(-4.0f, 0.0f, 0.0f)), Cube(glm::vec3(0.0f, 0.0f, -4.0f)), Cube(glm::vec3(0.0f, 2.0, -4.0))
 	};
 
-	cubes[0].setMvpId(mvpId);
-	cubes[1].setMvpId(mvpId);
+	for (Cube& cube: cubes)
+	{
+		cube.setMvpId(mvpId);
+	}
 
 	//create matrices
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
-	glm::mat4 view = glm::lookAt(glm::vec3(0, 5, 10), //where camera is in world space
+	glm::mat4 view = glm::lookAt(glm::vec3(0, 3, 10), //where camera is in world space
 		glm::vec3(0, 0, 0), //look towards origin
 		glm::vec3(0, 1, 0) //camera oriented vertically
 	);
