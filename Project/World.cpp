@@ -23,11 +23,24 @@ void World::update()
 	currentTime = glfwGetTime();
 	float deltaTime = float(currentTime - prevTime);
 
+	glm::vec3 velocity(0);
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		std::cout << camera.getPosition().z << "\n";
-		camera.translate(glm::vec3(0, 0, -deltaTime * camera.getSpeed()));
+		velocity.z -= camera.getSpeed();
 	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	{
+		velocity.z += camera.getSpeed();
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		velocity.x -= camera.getSpeed();
+	}
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		velocity.x += camera.getSpeed();
+	}
+	camera.translate(deltaTime * velocity);
 
 	draw();
 }

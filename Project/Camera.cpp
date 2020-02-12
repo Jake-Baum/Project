@@ -4,6 +4,7 @@ Camera::Camera()
 {
 	projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.f);
 	position = glm::vec3(0, 3, 10);
+	direction = glm::vec3(0, 0, -1);
 }
 
 glm::vec3 Camera::getPosition()
@@ -16,18 +17,15 @@ float Camera::getSpeed()
 	return speed;
 }
 
-void Camera::translate(glm::vec3 vec)
+void Camera::translate(glm::vec3 velocity)
 {
-	std::cout << "Vec: " << vec.z << "\n";
-	std::cout << "Position before: " << position.z << "\n";
-	position += vec;
-	std::cout <<"Position after: " << position.z << "\n";
+	position += velocity;
 }
 
 glm::mat4 Camera::getViewMatrix()
 {
 	return glm::lookAt(position, //where camera is in world space
-	glm::vec3(0, 0, 0), //look towards origin
+	position + direction, //look forwards
 	glm::vec3(0, 1, 0) //camera oriented vertically
 	);
 }

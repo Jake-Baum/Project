@@ -10,6 +10,7 @@ class Camera
 private:
 	glm::mat4 projection;
 	glm::vec3 position;
+	glm::vec3 direction;
 	float speed = 3.0f;
 
 public:
