@@ -7,6 +7,7 @@
 
 #include "Cube.h"
 #include "Camera.h"
+#include "Input.h"
 
 class World
 {
@@ -17,8 +18,15 @@ private:
   Camera camera;
   double currentTime;
   double prevTime;
+  Input input;
 
 public:
+  struct
+  {
+    int width;
+    int height;
+  } windowSize;
+
   World(GLFWwindow*, unsigned int programId, Camera);
   void addCube(Cube);
   std::vector<Cube> getCubes();

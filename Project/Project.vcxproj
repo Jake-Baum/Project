@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="LoadShader.cpp" />
     <ClCompile Include="WindowCreator.cpp" />
     <ClCompile Include="World.cpp" />
@@ -150,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="libs.h" />
     <ClInclude Include="LoadShader.h" />
     <ClInclude Include="World.h" />

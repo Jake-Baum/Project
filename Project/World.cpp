@@ -5,6 +5,9 @@ World::World(GLFWwindow* window, unsigned int programId, Camera camera)
 	this->window = window;
 	this->programId = programId;
 	this->camera = camera;
+	glfwGetWindowSize(window, &windowSize.width, &windowSize.height);
+	currentTime = glfwGetTime();
+	prevTime = currentTime;
 }
 
 std::vector<Cube> World::getCubes()
@@ -23,24 +26,7 @@ void World::update()
 	currentTime = glfwGetTime();
 	float deltaTime = float(currentTime - prevTime);
 
-	glm::vec3 velocity(0);
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-	{
-		velocity.z -= camera.getSpeed();
-	}
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-	{
-		velocity.z += camera.getSpeed();
-	}
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-	{
-		velocity.x -= camera.getSpeed();
-	}
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-	{
-		velocity.x += camera.getSpeed();
-	}
-	camera.translate(deltaTime * velocity);
+	input.handleInput(window, deltaTime, camera);
 
 	draw();
 }
