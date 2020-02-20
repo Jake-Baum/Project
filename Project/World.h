@@ -21,13 +21,8 @@ private:
   Input input;
 
 public:
-  struct
-  {
-    int width;
-    int height;
-  } windowSize;
-
   World(GLFWwindow*, unsigned int programId, Camera);
+  static glm::i32vec2 initWindowSize(GLFWwindow*);
   void addCube(Cube);
   std::vector<Cube> getCubes();
   void update();

@@ -10,9 +10,13 @@
 class Input
 {
 private:
-	glm::vec2 mouseCoords;
+	float mouseSpeed = 0.5f;
+	glm::i32vec2 windowSize;
+	glm::f64vec2 mouseCoords;
 
 public:
 	Input();
+	Input(glm::i32vec2);
 	void handleInput(GLFWwindow*, float, Camera&);
+	glm::f64vec2 getMouseCoords();
 };

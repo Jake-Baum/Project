@@ -1,14 +1,23 @@
 #include "World.h"
 
-World::World(GLFWwindow* window, unsigned int programId, Camera camera)
+World::World(GLFWwindow* window, unsigned int programId, Camera camera) : input(initWindowSize(window))
 {
 	this->window = window;
 	this->programId = programId;
 	this->camera = camera;
-	glfwGetWindowSize(window, &windowSize.width, &windowSize.height);
+	int width, height;
+	glfwGetWindowSize(window, &width, &height);
 	currentTime = glfwGetTime();
 	prevTime = currentTime;
 }
+
+glm::i32vec2 World::initWindowSize(GLFWwindow* window)
+{
+	int width, height;
+	glfwGetWindowSize(window, &width, &height);
+	return glm::i32vec2(width, height);
+}
+
 
 std::vector<Cube> World::getCubes()
 {
