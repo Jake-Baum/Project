@@ -12,4 +12,9 @@
 #include <vector>
 #include <string>
 
+const glm::vec3 LEFT(-1, 0, 0);
+const glm::vec3 RIGHT(1, 0, 0);
 const glm::vec3 UP(0, 1, 0);
+const glm::vec3 DOWN(0, -1, 0);
+const glm::vec3 FORWARD(0, 0, -1);
+const glm::vec3 BACKWARDS(0, 0, 1);

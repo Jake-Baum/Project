@@ -6,5 +6,8 @@ out vec3 colour;
 
 void main()
 {
-	colour = fragmentColour;
+	float ambientStrength = 0.1;
+	vec3 ambient = ambientStrength * vec3(1, 1, 1); //white light
+
+	colour = ambient * fragmentColour;
 }

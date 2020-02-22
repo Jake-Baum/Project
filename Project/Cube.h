@@ -12,7 +12,7 @@ public:
     static const unsigned int numIndices = 36;
 
 private:
-    static constexpr GLfloat baseCubeVertices[][3] =
+    static constexpr GLfloat vertices[][3] =
     {
         {-1.0f,-1.0f,-1.0f},//0
         {-1.0f,-1.0f, 1.0f},//1
@@ -24,7 +24,7 @@ private:
         {1.0f, 1.0f, 1.0f}//7
     };
 
-    static constexpr unsigned int baseIndices[] =
+    static constexpr unsigned int indices[] =
     {
         0,1,2,
         3,0,4,
@@ -41,7 +41,7 @@ private:
     };
 
 
-    static constexpr GLfloat baseColours[][3] = 
+    static constexpr GLfloat colours[][3] = 
     {
         {0.583f,  0.771f,  0.014f},
         {0.609f,  0.115f,  0.436f},
@@ -53,21 +53,22 @@ private:
         {0.559f,  0.436f,  0.730f}
     };
 
+
     glm::vec3 position;
 
     std::vector<float> vertexBufferData;
     std::vector<unsigned int> indexBufferData;
     std::vector<float> colourBufferData;
+    std::vector<glm::vec3> normalBufferData;
 
     unsigned int vertexBuffer;
     unsigned int indexBuffer;
     unsigned int colourBuffer;
+    unsigned int normalBuffer;
     unsigned int mvpId;
 
 public:
-    Cube();
     Cube(glm::vec3);
-    //~Cube();
     std::vector<float> getVertexBufferData();
     std::vector<unsigned int> getIndexBufferData();
     std::vector<float> getColourBufferData();
