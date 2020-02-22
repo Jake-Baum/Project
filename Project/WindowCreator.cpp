@@ -57,6 +57,7 @@ int main()
 
 	//So we can catch key presses
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	//Set background colour
 	glClearColor(0.1f, 0.1f, 0.3f, 0.2f);

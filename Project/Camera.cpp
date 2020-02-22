@@ -31,6 +31,13 @@ void Camera::translate(glm::vec3 velocity)
 
 void Camera::rotate(glm::vec2 rotation)
 {
+	//limit maximum rotation
+	//this was initially added because my cursor keeps glitching out on this PC
+	if (rotation.x > 0.05)rotation.x = 0.05;
+	if (rotation.x < -0.05)rotation.x = -0.05;
+	if (rotation.y > 0.05)rotation.y = 0.05;
+	if (rotation.y < -0.05)rotation.y = -0.05;
+	
 	angle += rotation;
 	direction = glm::vec3(cos(angle.y) * sin(angle.x), sin(angle.y), cos(angle.y) * cos(angle.x));
 }
