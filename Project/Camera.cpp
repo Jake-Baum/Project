@@ -22,7 +22,7 @@ glm::vec3 Camera::getDirection()
 //returns a vector perpendicular to direction and up vector
 glm::vec3 Camera::getRight()
 {
-	return glm::cross(direction, glm::vec3(0, 1, 0));
+	return glm::cross(direction, UP);
 }
 
 glm::vec2 Camera::getAngle()

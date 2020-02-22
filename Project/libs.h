@@ -11,3 +11,5 @@
 #include <sstream>
 #include <vector>
 #include <string>
+
+const glm::vec3 UP(0, 1, 0);

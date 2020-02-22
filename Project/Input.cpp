@@ -29,15 +29,23 @@ void Input::handleInput(GLFWwindow* window, float deltaTime, Camera& camera)
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		velocity += camera.getDirection() * -camera.speed;
+		velocity -= camera.getDirection() * camera.speed;
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		velocity += camera.getRight() * -camera.speed;
+		velocity -= camera.getRight() * camera.speed;
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
 		velocity += camera.getRight() * camera.speed;
+	}
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+	{
+		velocity += UP * camera.speed;
+	}
+	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+	{
+		velocity -= UP * camera.speed;
 	}
 	camera.translate(deltaTime * velocity);
 	camera.rotate(deltaTime * angle);
