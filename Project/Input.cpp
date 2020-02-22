@@ -18,29 +18,29 @@ void Input::handleInput(GLFWwindow* window, float deltaTime, Camera& camera)
 	//set cursor position back to centre of screen
 	glfwSetCursorPos(window, windowSize.x / 2, windowSize.y / 2);
 	glm::vec2 angle(0);
-	angle.x = mouseSpeed * float(windowSize.x / 2 - mouseCoords.x) * deltaTime;
-	angle.y = mouseSpeed * float(windowSize.y / 2 - mouseCoords.y) * deltaTime;
+	angle.x = mouseSpeed * float(windowSize.x / 2 - mouseCoords.x);
+	angle.y = mouseSpeed * float(windowSize.y / 2 - mouseCoords.y);
 	
 
 	glm::vec3 velocity(0);
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		velocity.z -= camera.getSpeed();
+		velocity += camera.getDirection() * camera.speed;
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		velocity.z += camera.getSpeed();
+		velocity += camera.getDirection() * -camera.speed;
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		velocity.x -= camera.getSpeed();
+		velocity += camera.getRight() * -camera.speed;
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		velocity.x += camera.getSpeed();
+		velocity += camera.getRight() * camera.speed;
 	}
 	camera.translate(deltaTime * velocity);
-	camera.rotate(angle);
+	camera.rotate(deltaTime * angle);
 }
 
 glm::f64vec2 Input::getMouseCoords()
