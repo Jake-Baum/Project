@@ -25,6 +25,7 @@ public:
   static glm::i32vec2 initWindowSize(GLFWwindow*);
   void addCube(Cube);
   std::vector<Cube> getCubes();
+  void start();
   void update();
   void draw();
 };

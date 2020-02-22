@@ -29,6 +29,11 @@ void World::addCube(Cube cube)
 	cubes.push_back(cube);
 }
 
+void World::start()
+{
+
+}
+
 void World::update()
 {
 	prevTime = currentTime;

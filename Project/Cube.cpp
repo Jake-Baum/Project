@@ -2,18 +2,14 @@
 
 Cube::Cube(glm::vec3 position)
 {
-  normalBufferData.push_back(LEFT);
-  normalBufferData.push_back(FORWARD);
-  normalBufferData.push_back(DOWN);
-  normalBufferData.push_back(FORWARD);
-  normalBufferData.push_back(LEFT);
-  normalBufferData.push_back(DOWN);
-  normalBufferData.push_back(BACKWARDS);
-  normalBufferData.push_back(RIGHT);
-  normalBufferData.push_back(RIGHT);
-  normalBufferData.push_back(UP);
-  normalBufferData.push_back(UP);
-  normalBufferData.push_back(BACKWARDS);
+  normalBufferData.push_back(glm::normalize(LEFT + DOWN + FORWARD));
+  normalBufferData.push_back(glm::normalize(LEFT + DOWN + BACKWARD));
+  normalBufferData.push_back(glm::normalize(LEFT + UP + BACKWARD));
+  normalBufferData.push_back(glm::normalize(RIGHT + UP + FORWARD));
+  normalBufferData.push_back(glm::normalize(LEFT + UP + FORWARD));
+  normalBufferData.push_back(glm::normalize(RIGHT + DOWN + BACKWARD));
+  normalBufferData.push_back(glm::normalize(RIGHT + DOWN + FORWARD));
+  normalBufferData.push_back(glm::normalize(RIGHT + UP + BACKWARD));
 
   for (int i = 0; i < numVertices; i++)
   {
