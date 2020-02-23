@@ -27,6 +27,7 @@ Cube::Cube(glm::vec3 position)
   this->position = position;
 
   mvpId = 1;
+  normalMatrixId = 1;
 
   glGenBuffers(1, &vertexBuffer);
   glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
@@ -65,6 +66,11 @@ glm::mat4 Cube::getModelMatrix()
     return glm::translate(glm::mat4(1.0f), position);
 }
 
+glm::mat3 Cube::getNormalMatrix()
+{
+  return glm::mat3(glm::transpose(glm::inverse(getModelMatrix())));
+}
+
 void Cube::setMvpId(unsigned int id)
 {
   mvpId = id;
@@ -74,7 +80,9 @@ void Cube::draw(glm::mat4 vp)
 {
   glm::mat4 mvp = vp * getModelMatrix();
   glUniformMatrix4fv(mvpId, 1, GL_FALSE, &mvp[0][0]);
-
+  glm::mat3 normalMatrix = getNormalMatrix();
+  glUniformMatrix3fv(normalMatrixId, 1, GL_FALSE, &normalMatrix[0][0]);
+  
   glEnableVertexAttribArray(0);
   glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);

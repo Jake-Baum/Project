@@ -9,11 +9,12 @@ out vec3 fragmentColour;
 out vec3 fragmentNormal;
 
 uniform mat4 mvp;
+uniform mat3 normalMatrix;
 
 void main()
 {
 	gl_Position = mvp * vec4(vertexPosition, 1);
 	fragmentPosition = vertexPosition;
 	fragmentColour = vertexColour;
-	fragmentNormal = vertexNormal;
+	fragmentNormal = normalMatrix * vertexNormal;
 }

@@ -73,6 +73,7 @@ int main()
 	GLuint programId = LoadShaders("VertexShader.glsl", "FragmentShader.glsl");
 
 	unsigned int mvpId = glGetUniformLocation(programId, "mvp");
+	unsigned int normalMatrixId = glGetUniformLocation(programId, "normalMatrix");
 
 
 	Camera camera;
@@ -86,6 +87,7 @@ int main()
 	for (Cube& cube: cubes)
 	{
 		cube.setMvpId(mvpId);
+		cube.normalMatrixId = normalMatrixId;
 		world.addCube(cube);
 	}
 

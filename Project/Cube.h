@@ -65,14 +65,16 @@ private:
     unsigned int indexBuffer;
     unsigned int colourBuffer;
     unsigned int normalBuffer;
-    unsigned int mvpId;
 
 public:
+    unsigned int mvpId;
+    unsigned int normalMatrixId;
     Cube(glm::vec3);
     std::vector<float> getVertexBufferData();
     std::vector<unsigned int> getIndexBufferData();
     std::vector<float> getColourBufferData();
     glm::mat4 getModelMatrix();
+    glm::mat3 getNormalMatrix();
     void setMvpId(unsigned int);
 
     void draw(glm::mat4);
