@@ -70,24 +70,28 @@ int main()
 	glBindVertexArray(vertexArrayId);
 
 	//Compile GLSL program from shaders
-	GLuint programId = LoadShaders("VertexShader.glsl", "FragmentShader.glsl");
+	Shaders shaders;
 
-	unsigned int mvpId = glGetUniformLocation(programId, "mvp");
-	unsigned int normalMatrixId = glGetUniformLocation(programId, "normalMatrix");
-	unsigned int cameraPositionId = glGetUniformLocation(programId, "cameraPosition");
+	shaders.programId = LoadShaders("VertexShader.glsl", "FragmentShader.glsl");
 
-	Camera camera;
-	World world(window, programId, camera, cameraPositionId);
+	shaders.uniformIds.mvpId = glGetUniformLocation(shaders.programId, "mvp");
+	shaders.uniformIds.cameraPositionId = glGetUniformLocation(shaders.programId, "cameraPosition");
+	shaders.uniformIds.normalMatrixId = glGetUniformLocation(shaders.programId, "normalMatrix");
+
+
+	Camera camera(&shaders);
+	World world(window, &shaders, &camera);
 
 	std::vector<Cube> cubes =
 	{
-		Cube(glm::vec3(4.0f, 0.0f, 0.0f)), Cube(glm::vec3(-4.0f, 0.0f, 0.0f)), Cube(glm::vec3(0.0f, 0.0f, -4.0f)), Cube(glm::vec3(0.0f, 2.0, -4.0))
+		Cube(&shaders, &camera, glm::vec3(4.0f, 0.0f, 0.0f)), 
+		Cube(&shaders, &camera, glm::vec3(-4.0f, 0.0f, 0.0f)), 
+		Cube(&shaders, &camera, glm::vec3(0.0f, 0.0f, -4.0f)), 
+		Cube(&shaders, &camera, glm::vec3(0.0f, 2.0, -4.0))
 	};
 
 	for (Cube& cube: cubes)
 	{
-		cube.setMvpId(mvpId);
-		cube.normalMatrixId = normalMatrixId;
 		world.addCube(cube);
 	}
 
@@ -97,7 +101,7 @@ int main()
 		world.update();
 	}
 
-	glDeleteProgram(programId);
+	glDeleteProgram(shaders.programId);
 	glDeleteVertexArrays(1, &vertexArrayId);
 
 	glfwTerminate();

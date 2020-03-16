@@ -5,6 +5,8 @@
 #include "libs.h"
 #endif
 
+#include "Mesh.h"
+
 class Cube
 {
 public:
@@ -53,29 +55,9 @@ private:
         {0.559f,  0.436f,  0.730f}
     };
 
-
-    glm::vec3 position;
-
-    std::vector<float> vertexBufferData;
-    std::vector<unsigned int> indexBufferData;
-    std::vector<float> colourBufferData;
-    std::vector<glm::vec3> normalBufferData;
-
-    unsigned int vertexBuffer;
-    unsigned int indexBuffer;
-    unsigned int colourBuffer;
-    unsigned int normalBuffer;
+    Mesh mesh;
 
 public:
-    unsigned int mvpId;
-    unsigned int normalMatrixId;
-    Cube(glm::vec3);
-    std::vector<float> getVertexBufferData();
-    std::vector<unsigned int> getIndexBufferData();
-    std::vector<float> getColourBufferData();
-    glm::mat4 getModelMatrix();
-    glm::mat3 getNormalMatrix();
-    void setMvpId(unsigned int);
-
-    void draw(glm::mat4);
+    Cube(Shaders *, Camera *, glm::vec3);
+    void draw();
 };

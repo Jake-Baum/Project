@@ -13,16 +13,17 @@ class World
 {
 private:
   std::vector<Cube> cubes;
-  unsigned int programId;
-  unsigned int cameraPositionId;
   GLFWwindow* window;
-  Camera camera;
+  Camera *camera;
   double currentTime;
   double prevTime;
   Input input;
 
 public:
-  World(GLFWwindow*, unsigned int programId, Camera, unsigned int cameraPositionId);
+  Shaders *shaders;
+
+  World(GLFWwindow*, Shaders *shaders, Camera *camera);
+  Camera *getCamera();
   static glm::i32vec2 initWindowSize(GLFWwindow*);
   void addCube(Cube);
   std::vector<Cube> getCubes();
