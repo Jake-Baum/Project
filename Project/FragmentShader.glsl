@@ -4,6 +4,8 @@ in vec3 fragmentPosition;
 in vec3 fragmentColour;
 in vec3 fragmentNormal;
 
+uniform vec3 cameraPosition;
+
 out vec3 colour;
 
 void main()
@@ -21,5 +23,11 @@ void main()
 	float diff = max(dot(norm, lightDirection), 0.0);
 	vec3 diffuse = diff * lightColour;
 
-	colour = (ambient + diffuse) * fragmentColour;
+	//calculate specular light
+	float strength = 0.5;
+	vec3 viewDirection = normalize(cameraPosition - fragmentPosition);
+	vec3 reflectionDirection = reflect(lightDirection, fragmentNormal);
+	vec3 specular = pow(max(dot(viewDirection, reflectionDirection), 0.0), 32) * strength * lightColour;//32 is 'shininess of an object'
+
+	colour = (ambient + diffuse + specular) * fragmentColour;
 }

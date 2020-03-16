@@ -14,6 +14,7 @@ class World
 private:
   std::vector<Cube> cubes;
   unsigned int programId;
+  unsigned int cameraPositionId;
   GLFWwindow* window;
   Camera camera;
   double currentTime;
@@ -21,7 +22,7 @@ private:
   Input input;
 
 public:
-  World(GLFWwindow*, unsigned int programId, Camera);
+  World(GLFWwindow*, unsigned int programId, Camera, unsigned int cameraPositionId);
   static glm::i32vec2 initWindowSize(GLFWwindow*);
   void addCube(Cube);
   std::vector<Cube> getCubes();

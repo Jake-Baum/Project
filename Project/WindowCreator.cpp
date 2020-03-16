@@ -74,10 +74,10 @@ int main()
 
 	unsigned int mvpId = glGetUniformLocation(programId, "mvp");
 	unsigned int normalMatrixId = glGetUniformLocation(programId, "normalMatrix");
-
+	unsigned int cameraPositionId = glGetUniformLocation(programId, "cameraPosition");
 
 	Camera camera;
-	World world(window, programId, camera);
+	World world(window, programId, camera, cameraPositionId);
 
 	std::vector<Cube> cubes =
 	{

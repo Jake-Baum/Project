@@ -1,10 +1,11 @@
 #include "World.h"
 
-World::World(GLFWwindow* window, unsigned int programId, Camera camera) : input(initWindowSize(window))
+World::World(GLFWwindow* window, unsigned int programId, Camera camera, unsigned int cameraPositionId) : input(initWindowSize(window))
 {
 	this->window = window;
 	this->programId = programId;
 	this->camera = camera;
+	this->cameraPositionId = cameraPositionId;
 	int width, height;
 	glfwGetWindowSize(window, &width, &height);
 	currentTime = glfwGetTime();
@@ -50,8 +51,11 @@ void World::draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glm::mat4 vp = camera.getVp();
+	glm::vec3 cameraPosition = camera.getPosition();
 
 	glUseProgram(programId);
+
+	glUniformMatrix3fv(cameraPositionId, 1, GL_FALSE, &cameraPosition[0]);
 
 	for (Cube cube : cubes)
 	{
