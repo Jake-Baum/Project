@@ -1,8 +1,7 @@
 #include "Cube.h"
 
-Cube::Cube(Shaders *shaders, Camera *camera, glm::vec3 position) : mesh(shaders, camera)
+Cube::Cube(Shaders *shaders, Camera *camera, glm::vec3 position) : Object(shaders, camera)
 {
-
   std::vector<glm::vec3> normalBufferData;
   normalBufferData.push_back(glm::normalize(LEFT + DOWN + FORWARD));
   normalBufferData.push_back(glm::normalize(LEFT + DOWN + BACKWARD));
@@ -28,13 +27,7 @@ Cube::Cube(Shaders *shaders, Camera *camera, glm::vec3 position) : mesh(shaders,
       indexBufferData.push_back(indices[i]);
   }
 
-  this->mesh.setPosition(position);
-  this->mesh.setVertices(vertexBufferData);
-  this->mesh.setIndices(indexBufferData);
-
-}
-
-void Cube::draw()
-{
-  mesh.draw();
+  this->position = position;
+  this->mesh.vertices = vertexBufferData;
+  this->mesh.indices = indexBufferData;
 }

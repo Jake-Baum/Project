@@ -6,6 +6,7 @@
 #include "LoadShader.h"
 #include "World.h"
 #include "Cube.h"
+#include "Plane.h"
 
 void updateFpsCounter(GLFWwindow*);
 
@@ -90,10 +91,14 @@ int main()
 		Cube(&shaders, &camera, glm::vec3(0.0f, 2.0, -4.0))
 	};
 
+	Plane plane(&shaders, &camera, glm::vec3(0, 0, 0));
+
 	for (Cube& cube: cubes)
 	{
-		world.addCube(cube);
+		world.addObject(&cube);
 	}
+
+	world.addObject(&plane);
 
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE))
 	{

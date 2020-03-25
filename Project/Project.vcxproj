@@ -146,6 +146,8 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="LoadShader.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Plane.cpp" />
     <ClCompile Include="WindowCreator.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
@@ -156,6 +158,8 @@
     <ClInclude Include="libs.h" />
     <ClInclude Include="LoadShader.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Plane.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>

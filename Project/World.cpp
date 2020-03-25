@@ -24,14 +24,14 @@ Camera* World::getCamera()
 }
 
 
-std::vector<Cube> World::getCubes()
+std::vector<Object *> World::getObjects()
 {
-	return cubes;
+	return objects;
 }
 
-void World::addCube(Cube cube)
+void World::addObject(Object *object)
 {
-	cubes.push_back(cube);
+	objects.push_back(object);
 }
 
 void World::start()
@@ -58,9 +58,9 @@ void World::draw()
 
 	glUseProgram(shaders->programId);
 
-	for (Cube cube : cubes)
+ 	for (Object *object: objects)
 	{
-		cube.draw();
+		object->draw();
 	}
 
 	glDisableVertexAttribArray(0);

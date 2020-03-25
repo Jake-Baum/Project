@@ -12,7 +12,7 @@
 class World
 {
 private:
-  std::vector<Cube> cubes;
+  std::vector<Object *> objects;
   GLFWwindow* window;
   Camera *camera;
   double currentTime;
@@ -25,8 +25,8 @@ public:
   World(GLFWwindow*, Shaders *shaders, Camera *camera);
   Camera *getCamera();
   static glm::i32vec2 initWindowSize(GLFWwindow*);
-  void addCube(Cube);
-  std::vector<Cube> getCubes();
+  void addObject(Object *);
+  std::vector<Object *> getObjects();
   void start();
   void update();
   void draw();

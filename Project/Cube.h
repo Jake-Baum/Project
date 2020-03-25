@@ -5,9 +5,10 @@
 #include "libs.h"
 #endif
 
+#include "Object.h"
 #include "Mesh.h"
 
-class Cube
+class Cube : public Object
 {
 public:
     static const unsigned int numVertices = 8;
@@ -18,7 +19,7 @@ private:
     {
         {-1.0f,-1.0f,-1.0f},//0
         {-1.0f,-1.0f, 1.0f},//1
-        {-1.0f, 1.0f, 1.0f },//2
+        {-1.0f, 1.0f, 1.0f},//2
         {1.0f, 1.0f, -1.0f},//3
         {-1.0f, 1.0f,-1.0f},//4
         {1.0f,-1.0f, 1.0f},//5
@@ -55,9 +56,6 @@ private:
         {0.559f,  0.436f,  0.730f}
     };
 
-    Mesh mesh;
-
 public:
     Cube(Shaders *, Camera *, glm::vec3);
-    void draw();
 };
