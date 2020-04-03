@@ -8,6 +8,7 @@
 class Camera
 {
 private:
+	Shaders* shaders;
 	glm::mat4 projection;
 	glm::vec3 position;
 	glm::vec3 direction;
@@ -17,7 +18,7 @@ public:
 	float speed = 3.0f;
 	float fov = 45.0f;
 
-	Camera();
+	Camera(Shaders *);
 	glm::mat4 getViewMatrix();
 	glm::vec3 getPosition();
 	glm::vec3 getDirection();
@@ -26,4 +27,5 @@ public:
 	void translate(glm::vec3);
 	void rotate(glm::vec2);
 	glm::mat4 getVp();
+	void update();
 };

@@ -1,7 +1,8 @@
 #include "Camera.h"
 
-Camera::Camera()
+Camera::Camera(Shaders *shaders)
 {
+	this->shaders = shaders;
 	projection = glm::perspective(glm::radians(fov), 4.0f / 3.0f, 0.1f, 100.f);
 	position = glm::vec3(0, 3, 10);
 	direction = glm::vec3(0, 0, -1);
@@ -59,4 +60,9 @@ glm::mat4 Camera::getViewMatrix()
 glm::mat4 Camera::getVp()
 {
 	return projection * getViewMatrix();
+}
+
+void Camera::update()
+{
+	glUniform3fv(shaders->uniformIds.cameraPositionId, 1, &getPosition()[0]);
 }

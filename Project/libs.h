@@ -12,6 +12,9 @@
 #include <vector>
 #include <string>
 
+//Custom libraries
+#include "Shaders.h"
+
 const glm::vec3 LEFT(-1, 0, 0);
 const glm::vec3 RIGHT(1, 0, 0);
 const glm::vec3 UP(0, 1, 0);

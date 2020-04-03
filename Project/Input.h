@@ -17,6 +17,6 @@ private:
 public:
 	Input();
 	Input(glm::i32vec2);
-	void handleInput(GLFWwindow*, float, Camera&);
+	void handleInput(GLFWwindow *, float, Camera *);
 	glm::f64vec2 getMouseCoords();
 };
