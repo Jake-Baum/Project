@@ -7,6 +7,7 @@
 #include "World.h"
 #include "Cube.h"
 #include "Plane.h"
+#include "Terrain.h"
 
 void updateFpsCounter(GLFWwindow*);
 
@@ -93,12 +94,15 @@ int main()
 
 	Plane plane(&shaders, &camera, glm::vec3(0, 0, 0));
 
+	Terrain terrain(&shaders, &camera, glm::vec3(0, 0, 0), 50, 50);
+	
 	for (Cube& cube: cubes)
 	{
-		world.addObject(&cube);
+	//	world.addObject(&cube);
 	}
 
-	world.addObject(&plane);
+	//world.addObject(&plane);
+	world.addObject(&terrain);
 
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE))
 	{

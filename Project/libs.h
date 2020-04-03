@@ -14,6 +14,7 @@
 
 //Custom libraries
 #include "Shaders.h"
+#include "Random.h"
 
 const glm::vec3 LEFT(-1, 0, 0);
 const glm::vec3 RIGHT(1, 0, 0);
