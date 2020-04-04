@@ -15,6 +15,8 @@ protected:
 	Camera *camera;
 
 	glm::vec3 position;
+	glm::vec3 scaleVec;
+	glm::vec3 rotation;
 
 	Mesh mesh;
 
@@ -27,4 +29,6 @@ public:
 	virtual void update();
 	virtual void draw();
 	virtual void translate(glm::vec3);
+	virtual void scale(glm::vec3);
+	virtual void rotate(glm::vec3);
 };

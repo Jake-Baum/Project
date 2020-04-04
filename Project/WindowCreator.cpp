@@ -92,17 +92,20 @@ int main()
 		Cube(&shaders, &camera, glm::vec3(0.0f, 2.0, -4.0))
 	};
 
+	cubes[0].scale(glm::vec3(0.5, 0.5, 0.5));
+	cubes[0].rotate(glm::vec3(0, 30, 0));
+
 	Plane plane(&shaders, &camera, glm::vec3(0, 0, 0));
 
-	Terrain terrain(&shaders, &camera, glm::vec3(0, 0, 0), 50, 50);
+	Terrain terrain(&shaders, &camera, glm::vec3(0, 0, 0), 100, 100);
 	
 	for (Cube& cube: cubes)
 	{
-	//	world.addObject(&cube);
+		world.addObject(&cube);
 	}
-
+	
 	//world.addObject(&plane);
-	world.addObject(&terrain);
+	//world.addObject(&terrain);
 
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE))
 	{

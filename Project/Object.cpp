@@ -1,14 +1,20 @@
 #include "Object.h"
 
-Object::Object(Shaders *shaders, Camera *camera) : mesh()
+Object::Object(Shaders* shaders, Camera* camera) : mesh()
 {
   this->shaders = shaders;
   this->camera = camera;
+  position = glm::vec3(0);
+  scaleVec = glm::vec3(1);
+  rotation = glm::vec3(0);
 }
 
 glm::mat4 Object::getModelMatrix()
 {
-  return glm::translate(glm::mat4(1.0f), position);
+  glm::quat quaternion(rotation);
+  glm::mat4 rotationMatrix(quaternion);
+
+  return glm::translate(glm::mat4(1.0f), position) * rotationMatrix * glm::scale(glm::mat4(1.0f), scaleVec);
 }
 
 glm::mat4 Object::getNormalMatrix()
@@ -57,4 +63,14 @@ void Object::draw()
 void Object::translate(glm::vec3 translation)
 {
   position += translation;
+}
+
+void Object::scale(glm::vec3 scaleVec)
+{
+  this->scaleVec *= scaleVec;
+}
+
+void Object::rotate(glm::vec3 rotation)
+{
+  this->rotation += rotation;
 }

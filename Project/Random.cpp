@@ -7,5 +7,5 @@ Random::Random()
 
 float Random::random()
 {
-	return rand();
+	return (float)(rand() / (float)RAND_MAX);
 }

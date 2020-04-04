@@ -8,16 +8,16 @@ Terrain::Terrain(Shaders* shaders, Camera* camera, glm::vec3 position, unsigned 
 
 	Random random;
 
+	float height = 0;
+
 	//add vertices
 	for (int y = 0; y < length; y++)
 	{
+		height += random.random() - 0.5;
 		for (int x = 0; x < width; x++)
 		{
-			float r = random.random() / 10000;
-			std::cout << r << std::endl;
-
 			Vertex vertex;
-			vertex.position = glm::vec3(x, r, y);
+			vertex.position = glm::vec3(x, height + random.random() - 0.5, y);
 			vertex.colour = glm::vec3(1);
 			vertex.normal = UP;
 			mesh.vertices.push_back(vertex);
