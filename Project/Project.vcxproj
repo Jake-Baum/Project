@@ -150,6 +150,7 @@
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="WindowCreator.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
@@ -165,6 +166,7 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="Terrain.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>

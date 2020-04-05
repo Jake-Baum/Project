@@ -41,13 +41,16 @@ void World::start()
 
 void World::update()
 {
-	prevTime = currentTime;
-	currentTime = glfwGetTime();
-	float deltaTime = float(currentTime - prevTime);
+	Time::update();
 
-	input.handleInput(window, deltaTime, camera);
+	input.handleInput(window, camera);
 
 	camera->update();
+
+	for (Object* object : objects)
+	{
+		object->update();
+	}
 
 	draw();
 }

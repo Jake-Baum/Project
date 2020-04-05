@@ -7,6 +7,7 @@ Object::Object(Shaders* shaders, Camera* camera) : mesh()
   position = glm::vec3(0);
   scaleVec = glm::vec3(1);
   rotation = glm::vec3(0);
+  velocity = glm::vec3(0);
 }
 
 glm::mat4 Object::getModelMatrix()
@@ -24,7 +25,7 @@ glm::mat4 Object::getNormalMatrix()
 
 void Object::update()
 {
-
+  position += velocity * Time::deltaTime;
 }
 
 void Object::draw()
@@ -73,4 +74,9 @@ void Object::scale(glm::vec3 scaleVec)
 void Object::rotate(glm::vec3 rotation)
 {
   this->rotation += rotation;
+}
+
+void Object::setVelocity(glm::vec3 velocity)
+{
+  this->velocity = velocity;
 }

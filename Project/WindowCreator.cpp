@@ -94,6 +94,7 @@ int main()
 
 	cubes[0].scale(glm::vec3(0.5, 0.5, 0.5));
 	cubes[0].rotate(glm::vec3(0, 30, 0));
+	cubes[1].setVelocity(glm::vec3(0, 0, 1));
 
 	Plane plane(&shaders, &camera, glm::vec3(0, 0, 0));
 
@@ -109,6 +110,7 @@ int main()
 
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE))
 	{
+		Time::update();
 		updateFpsCounter(window);
 		world.update();
 	}

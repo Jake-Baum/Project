@@ -1,4 +1,5 @@
 #pragma once
+
 //OpenGL libraries
 #include <glew.h>
 #include <glfw3.h>
@@ -17,6 +18,7 @@
 //Custom libraries
 #include "Shaders.h"
 #include "Random.h"
+#include "Time.h"
 
 const glm::vec3 LEFT(-1, 0, 0);
 const glm::vec3 RIGHT(1, 0, 0);

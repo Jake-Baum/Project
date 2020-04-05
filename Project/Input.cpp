@@ -12,7 +12,7 @@ Input::Input(glm::i32vec2 windowSize)
 	mouseCoords;
 }
 
-void Input::handleInput(GLFWwindow* window, float deltaTime, Camera *camera)
+void Input::handleInput(GLFWwindow* window, Camera *camera)
 {
 	glfwGetCursorPos(window, &mouseCoords.x, &mouseCoords.y);
 	//set cursor position back to centre of screen
@@ -47,8 +47,8 @@ void Input::handleInput(GLFWwindow* window, float deltaTime, Camera *camera)
 	{
 		velocity -= UP * camera->speed;
 	}
-	camera->translate(deltaTime * velocity);
-	camera->rotate(deltaTime * angle);
+	camera->translate(Time::deltaTime * velocity);
+	camera->rotate(Time::deltaTime * angle);
 }
 
 glm::f64vec2 Input::getMouseCoords()

@@ -18,6 +18,8 @@ protected:
 	glm::vec3 scaleVec;
 	glm::vec3 rotation;
 
+	glm::vec3 velocity;
+
 	Mesh mesh;
 
 public:
@@ -31,4 +33,6 @@ public:
 	virtual void translate(glm::vec3);
 	virtual void scale(glm::vec3);
 	virtual void rotate(glm::vec3);
+
+	virtual void setVelocity(glm::vec3);
 };
