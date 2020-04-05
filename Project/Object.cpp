@@ -8,6 +8,9 @@ Object::Object(Shaders* shaders, Camera* camera) : mesh()
   scaleVec = glm::vec3(1);
   rotation = glm::vec3(0);
   velocity = glm::vec3(0);
+
+  glGenBuffers(1, &vertexBuffer);
+  glGenBuffers(1, &indexBuffer);
 }
 
 glm::mat4 Object::getModelMatrix()
@@ -34,15 +37,10 @@ void Object::draw()
   glUniformMatrix4fv(shaders->uniformIds.mvpId, 1, GL_FALSE, &mvp[0][0]);
   glm::mat3 normalMatrix = getNormalMatrix();
   glUniformMatrix3fv(shaders->uniformIds.normalMatrixId, 1, GL_FALSE, &normalMatrix[0][0]);
-
-  unsigned int vertexBuffer, indexBuffer;
-
-  glGenBuffers(1, &vertexBuffer);
+  
   glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
   glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(Vertex), &mesh.vertices[0], GL_STATIC_DRAW);
 
-
-  glGenBuffers(1, &indexBuffer);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(unsigned int), &mesh.indices[0], GL_STATIC_DRAW);
 

@@ -22,6 +22,9 @@ protected:
 
 	Mesh mesh;
 
+	unsigned int vertexBuffer;
+	unsigned int indexBuffer;
+
 public:
 	Object(Shaders *, Camera *);
 	

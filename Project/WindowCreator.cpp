@@ -105,13 +105,17 @@ int main()
 		world.addObject(&cube);
 	}
 	
-	//world.addObject(&plane);
+	world.addObject(&plane);
 	//world.addObject(&terrain);
+
+	Time::update();
 
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE))
 	{
-		Time::update();
-		updateFpsCounter(window);
+ 		Time::update();
+		float t = Time::deltaTime;
+		std::cout << t; // Doesn't work without this print???
+ 		updateFpsCounter(window);
 		world.update();
 	}
 

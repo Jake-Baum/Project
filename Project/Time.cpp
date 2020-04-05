@@ -1,8 +1,8 @@
 #include "Time.h"
 
-float Time::prevTime;
-float Time::currentTime;
-float Time::deltaTime;
+float Time::prevTime = 0;
+float Time::currentTime = 0;
+float Time::deltaTime = 0;
 
 void Time::update()
 {
