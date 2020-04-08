@@ -11,16 +11,29 @@ Terrain::Terrain(Shaders* shaders, Camera* camera, glm::vec3 position, unsigned 
 	float height = 0;
 
 	//add vertices
+	float minHeight = 0, maxHeight = 0;
 	for (int y = 0; y < length; y++)
 	{
-		height += random.random() - 0.5;
 		for (int x = 0; x < width; x++)
 		{
+			height += random.random() - 0.5;
 			Vertex vertex;
-			vertex.position = glm::vec3(x, height + random.random() - 0.5, y);
-			vertex.colour = glm::vec3(1);
+			vertex.position = glm::vec3(x, height, y);
 			vertex.normal = UP;
 			mesh.vertices.push_back(vertex);
+			if (height > maxHeight)maxHeight = height;
+			if (height < minHeight)minHeight = height;
+		}
+	}
+
+	for (int y = 0; y < length; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			float colour;
+			colour = mesh.vertices[y * length + x].position.y;
+			float norm = (colour - minHeight) / (maxHeight - minHeight);
+			mesh.vertices[y * length + x].colour = glm::vec3(norm);
 		}
 	}
 

@@ -15,7 +15,8 @@ private:
 	glm::vec2 angle;
 
 public:
-	float speed = 3.0f;
+	float speed = 300.0f;
+	float rotationMultiplier = 1000.0f;
 	float fov = 45.0f;
 
 	Camera(Shaders *);

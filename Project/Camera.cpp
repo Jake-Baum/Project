@@ -31,8 +31,14 @@ glm::vec2 Camera::getAngle()
 	return angle;
 }
 
+#include "Utils.h"
+
 void Camera::translate(glm::vec3 velocity)
 {
+	if (velocity.x > 0)
+	{
+		std::cout << velocity.x << std::endl;
+	}
 	position += velocity;
 }
 
@@ -40,12 +46,13 @@ void Camera::rotate(glm::vec2 rotation)
 {
 	//limit maximum rotation
 	//this was initially added because my cursor keeps glitching out on this PC
-	if (rotation.x > 0.05)rotation.x = 0.05;
-	if (rotation.x < -0.05)rotation.x = -0.05;
-	if (rotation.y > 0.05)rotation.y = 0.05;
-	if (rotation.y < -0.05)rotation.y = -0.05;
+	const float MAX_ROTATION = 0.0001;
+	if (rotation.x > MAX_ROTATION)rotation.x = MAX_ROTATION;
+	if (rotation.x < -MAX_ROTATION)rotation.x = -MAX_ROTATION;
+	if (rotation.y > MAX_ROTATION)rotation.y = MAX_ROTATION;
+	if (rotation.y < -MAX_ROTATION)rotation.y = -MAX_ROTATION;
 	
-	angle += rotation;
+	angle += rotation * rotationMultiplier;
 	direction = glm::vec3(cos(angle.y) * sin(angle.x), sin(angle.y), cos(angle.y) * cos(angle.x));
 }
 

@@ -8,8 +8,8 @@
 class Time
 {
 private:
-	static float prevTime;
-	static float currentTime;
+	static double prevTime;
+	static double currentTime;
 
 public:
 	static float deltaTime;

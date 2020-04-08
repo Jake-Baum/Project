@@ -106,18 +106,19 @@ int main()
 	}
 	
 	world.addObject(&plane);
-	//world.addObject(&terrain);
-
-	Time::update();
-
+	world.addObject(&terrain);
+	
+	int numberOfFrames = 0;
+	double startTime = glfwGetTime();
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE))
 	{
  		Time::update();
-		float t = Time::deltaTime;
-		std::cout << t; // Doesn't work without this print???
  		updateFpsCounter(window);
 		world.update();
+		numberOfFrames++;
 	}
+
+	std::cout  << "Average time per frame: " << (glfwGetTime() - startTime) / numberOfFrames << "s\n";
 
 	glDeleteProgram(shaders.programId);
 	glDeleteVertexArrays(1, &vertexArrayId);
@@ -129,18 +130,19 @@ int main()
 
 void updateFpsCounter(GLFWwindow* window)
 {
-	static double previousSeconds = glfwGetTime();
 	static int frameCount;
-	double currentSeconds = glfwGetTime();
-	double elapsedSeconds = currentSeconds - previousSeconds;
-	if (elapsedSeconds > 0.25f)
+	static float total;
+
+	total += Time::deltaTime;
+	frameCount++;
+
+	if (total > 0.5f)
 	{
-		previousSeconds = currentSeconds;
-		double fps = (double)frameCount / elapsedSeconds;
 		char fpsString[128];
-		sprintf_s(fpsString, "fps: %.2f", fps);
+		sprintf_s(fpsString, "fps: %.2f", frameCount / total);
 		glfwSetWindowTitle(window, fpsString);
 		frameCount = 0;
+		total = 0;
 	}
-	frameCount++;
+	return;
 }
